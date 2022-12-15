@@ -41,7 +41,14 @@ div {
   box-sizing: border-box;
 }
 
+.sort-btn {
+  margin : 20px;
+  margin-bottom: 0px;
+  float: left;
+}
+
 .list {
+  clear: both;
   padding-left: 20px;
   text-align: left;
   border-bottom: 1px solid grey;

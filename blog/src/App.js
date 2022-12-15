@@ -10,7 +10,7 @@ function App() {
   let logo = 'ReactBlog';
   let post = '안양 맛집';
   
-  let [글제목, 글제목변경] = useState(['남자 코트 추천', '안양 우동 맛집', '파이썬 독학']);
+  let [글제목, 글제목변경] = useState(['남자 코트 추천', '강남 우동맛집', '파이썬 독학']);
   let [likeCount, addLikeCount] = useState(0);
 
   return (
@@ -18,6 +18,13 @@ function App() {
       <div className='black-nav'>
         <h4>{ logo }</h4>
       </div>
+
+      <button className='sort-btn' 
+        onClick={ () => {
+          let copy = [...글제목];
+          copy.sort();
+          글제목변경(copy)
+        } }>제목 정렬</button>
 
       {/* state 변경 함수 특징 */}
       {/* 기존 state == 신규 state의 경우 변경하지 않음 */}
