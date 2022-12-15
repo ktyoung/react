@@ -19,15 +19,19 @@ function App() {
         <h4>{ logo }</h4>
       </div>
 
-      <div className='list'>
-        <button onClick={ () => { 글제목변경(글제목 = ['여자 코트 추천', '안양 우동 맛집', '파이썬 독학']) } }>제목 변경</button>
-        {/* onClick 이벤트 핸들러 사용법 */}
-        {/* 1. onClick={ 실행할 함수명 } */}
-        {/* 2. onClick={ function() {실행할 코드} } */}
-        {/* 3. onClick={ () => {실행할 코드} } */}
+      {/* state 변경 함수 특징 */}
+      {/* 기존 state == 신규 state의 경우 변경하지 않음 */}
 
-        {/* ※※※ state 변경하는 법 ※※※ */}
-        {/* state변경함수(새로운state) */}
+      {/* array/object 특징 */}
+      {/* 변수의 값이 저장되는 것이 아닌 주소 값이 저장됨 */}
+
+      <div className='list'>
+        <button onClick={ () => { 
+          // state가 arrat/object면 shallow copy를 만들어서 수정해야 함
+          let copy = [...글제목];
+          copy[0] = "여자 코트 추천";
+          글제목변경(copy);
+          } }>제목 변경</button>
         <h4>{ 글제목[0] } <span onClick={ () => { addLikeCount(likeCount + 1) } }>👍</span> { likeCount } </h4>
         <p>12월 15일 발행</p>
       </div>
