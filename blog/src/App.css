@@ -47,6 +47,10 @@ div {
   border-bottom: 1px solid grey;
 }
 
+.list button {
+  margin-top: 20px;
+}
+
 .black-nav {
   display: flex;
   background-color: black;
