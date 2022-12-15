@@ -1,4 +1,5 @@
 .App {
+  font-family: 'nanumsquare';
   text-align: center;
 }
 
@@ -35,4 +36,12 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.black-nav {
+  display: flex;
+  background-color: black;
+  width: 100%;
+  color : white;
+  padding-left: 20px;
 }
