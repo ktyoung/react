@@ -1,17 +1,27 @@
 /* eslint-disable */
-// ↑ eslint(자동으로 warning 잡아주는 기능) 끄기
 
 import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
 
-function App() { // ← App()도 컴포넌트임
+function App() { 
 
   let logo = 'ReactBlog';
   let post = '안양 맛집';
   
   let [글제목, 글제목변경] = useState(['남자 코트 추천', '강남 우동맛집', '파이썬 독학']);
-  let [likeCount, addLikeCount] = useState(0);
+  let [likeCount, setLikeCount] = useState(0);
+
+  // 모달창(UI)의 현재 상태(닫힘/열림)를 state에 저장
+  let [modal, setModal] = useState(false);
+  // 모달창 토글 함수
+  function toggleModal() {
+    if (modal == true) {
+      setModal(false);
+    } else {
+      setModal(true);
+    }
+  }
 
   return (
     <div className="App">
@@ -32,7 +42,7 @@ function App() { // ← App()도 컴포넌트임
           copy[0] = "여자 코트 추천";
           글제목변경(copy);
           } }>제목 변경</button>
-        <h4>{ 글제목[0] } <span onClick={ () => { addLikeCount(likeCount + 1) } }>👍</span> { likeCount } </h4>
+        <h4>{ 글제목[0] } <span onClick={ () => { setLikeCount(likeCount + 1) } }>👍</span> { likeCount } </h4>
         <p>12월 15일 발행</p>
       </div>
 
@@ -42,32 +52,24 @@ function App() { // ← App()도 컴포넌트임
       </div>
 
       <div className='list'>
-        <h4>{ 글제목[2] }</h4>
+        <h4 onClick={ toggleModal }>{ 글제목[2] }</h4>
         <p>12월 15일 발행</p>
       </div>
       
-      {/* 컴포넌트로 만들면 좋은 것? */}
-      {/* 1. 사이트에서 반복적으로 출현하는 HMTL 덩어리 */}
-      {/* 2. 내용이 자주 변경될 것 같은 HTML */}
-      {/* 3. 다른 페이지를 만들고 싶을 때 그 페이지의 HTML 덩어리 */}
-      {/* 4. 다른 팀원과 협업할 때 HTML */}
+      {/* 동적인 UI 만드는 3-step */}
+      {/* 1. html css로 미리 디자인 완성 */}
+      {/* 2. UI의 현재 상태를 state로 저장 */}
+      {/* 3. state에 따라 UI가 어떻게 보일지 작성(조건문 등으로) */}
 
-      {/* 컴포넌트의 단점? */}
-      {/* 1. state 사용 시 불편함이 있음 → state는 component 내부에 정의되어 있지 않으므로 */}
-
-      <Modal></Modal>
-      {/* <Modal/> → 위와 같이 동작함*/}
-
+      {/* html 중간에 조건문 쓰려먼 삼항연산자 사용 */}
+      {
+        // null은 비어있는 html 용으로 자주 사용함
+        modal == true ? <Modal/> : null
+      }
     </div>
   );
 }
 
-// 컴포넌트 만들기
-// 1. function 생성 → function App() {} 외부에 생성하기
-// 2. return() 안에 html 작성
-// 3. <함수명></함수명>쓰기
-
-// 컴포넌트 이름은 영어 대문자로 시작
 function Modal() {
   return (
     <div className='modal'>
@@ -75,24 +77,7 @@ function Modal() {
       <p>날짜</p>
       <p>상세내용</p>
     </div>
-    // <div></div> → 2개의 태그를 병렬로 사용할 수 없음!
-    // ┕ 병렬로 사용하려면 전체 html을 <></> (fragment)로 감싸면 사용 가능하다.
   );
 }
-
-// ===== (참고) 컴포넌트 만드는 문법 2 ===== //
-// let Modal = () => {
-//   return (
-//     <div></div>
-//   );
-// }
-
-// const는 값이 변경되었을 때 에러를 출력함(실수 방지)
-// const Modal = () => {
-//   return (
-//     <div></div>
-//   );
-// }
-// ===== //
 
 export default App;
