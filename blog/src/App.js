@@ -10,7 +10,7 @@ function App() {
   let post = '안양 맛집';
   
   let [글제목, 글제목변경] = useState(['남자 코트 추천', '강남 우동맛집', '파이썬 독학']);
-  let [likeCount, setLikeCount] = useState([10, 20, 30]);
+  let [likeCount, setLikeCount] = useState([0, 0, 0]);
 
   // map : 반복문
   // 1. array의 자료 개수만큼 함수 내부 코드를 실행함
@@ -32,7 +32,7 @@ function App() {
         <h4>{ logo }</h4>
       </div>
 
-      <button className='sort-btn' 
+      {/* <button className='sort-btn' 
         onClick={ () => {
           let copy = [...글제목];
           copy.sort();
@@ -57,7 +57,7 @@ function App() {
       <div className='list'>
         <h4>{ 글제목[2] }</h4>
         <p>12월 15일 발행</p>
-      </div>
+      </div> */}
 
       {/* 같은 html 반복 생성하는 법 */}
       {/* state의 크기 == 블로그의 글 개수 */}
