@@ -18,6 +18,8 @@ function App() {
 
   let [likeCount, setLikeCount] = useState([0, 0, 0]);
 
+  let [title, setTitle] = useState(0);
+
   let [modal, setModal] = useState(false);
   function toggleModal() {
     if (modal == true) {
@@ -26,6 +28,7 @@ function App() {
       setModal(true);
     }
   }
+
 
   return (
     <div className="App">
@@ -37,7 +40,7 @@ function App() {
         글제목.map(function(a, i){
           return (
             <div className='list' key={ i }>
-              <h4 onClick={ toggleModal }>{ a } 
+              <h4 onClick={ () => { toggleModal(); setTitle(i); }}>{ a } 
               <span onClick={ () => { 
                 let copy = [...likeCount];
                 copy[i] += 1;
@@ -50,27 +53,20 @@ function App() {
         })
       }
 
-      {/* props 문법 사용 방법 (부모 → 자식 state 전송하는 법) */}
-      {/* 1. <자식컴포넌트 작명={state이름} /> */}
       {
-        // (참고) props로 문자도 전송 가능
-        modal == true ? <Modal 글제목={글제목} color="skyblue" rename={rename} /> : null
+        modal == true ? <Modal 글제목={글제목} rename={rename} title={title} /> : null
       }
     </div>
   );
 }
 
-// state가 function App() {}에 정의되어 있으므로 state를 임의로 사용 불가함
-// props 문법을 사용하면 자식이 부모의 state를 사용 가능함
-// props 전송은 부모 → 자식만 가능함!
-
-// 2. props 매개변수 등록 후 props.작명 사용
 function Modal(props) {
+  // state를 자식 컴포넌트에 생성해도 됨
+  // 그러나, state가 다양한 컴포넌트에 필요하면 최상위 컴포넌트(App)에 생성해야함
+  // let [title, setTitle] = useState(0);
   return (
-    // 다양한 색의 모달창이 필요하다면?
-    // background 스타일을 props로 받아와 사용(함수의 매개변수처럼 활용 가능)
-    <div className='modal' style={{background : props.color}}>
-      <h4>{ props.글제목[0] }</h4>
+    <div className='modal'>
+      <h4>{ props.글제목[props.title] }</h4>
       <p>날짜</p>
       <p>상세내용</p>
       <button onClick={ () => { props.rename() } }>글수정</button>
