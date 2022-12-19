@@ -22,6 +22,10 @@ function App() {
   let [title, setTitle] = useState(0);
   let [inputText, setInputText] = useState('');
 
+  let date = new Date();
+  let [today, setToday] = useState([date.getFullYear()+"년 ", date.getMonth()+1+"월 ", date.getDate()+"일"]);
+
+
   let [modal, setModal] = useState(false);
   function toggleModal() {
     if (modal == true) {
@@ -32,9 +36,17 @@ function App() {
   }
 
   function addText() {
-    let copy = [...글제목];
-    copy.unshift(inputText);
-    글제목변경(copy);
+    if (inputText != "") {
+      let copy = [...글제목];
+      copy.unshift(inputText);
+      글제목변경(copy);
+
+      let copyLike = [...likeCount];
+      copyLike.unshift(0);
+      setLikeCount(copyLike)
+    } else {
+      alert("내용을 입력해 주세요.");
+    }
   }
 
   function removeText(key, n) {
@@ -61,7 +73,7 @@ function App() {
                 setLikeCount(copy);
                } }>👍
               </span> { likeCount[i] } </h4>
-              <p>12월 15일 발행</p>
+              <p>{ today }</p>
               <button className='del-btn' 
                 onClick={ () => { removeText(i, 1) } }>삭제</button>
             </div>
