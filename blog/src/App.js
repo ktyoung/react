@@ -2,10 +2,9 @@
 
 import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { render } from '@testing-library/react';
 
-// 페이지를 새로고침 하면 추가한 글이 사라지는 이유?
-// 새로고침 시 html, js 파일을 다시 읽기 때문
 function App() { 
 
   let logo = 'ReactBlog';
@@ -23,7 +22,7 @@ function App() {
   let [inputText, setInputText] = useState('');
 
   let date = new Date();
-  let [today, setToday] = useState([date.getFullYear()+"년 ", date.getMonth()+1+"월 ", date.getDate()+"일"]);
+  let [today, setToday] = useState([date.getFullYear()+"년 ", date.getMonth()+1+"월 ", date.getDate()+"일 발행"]);
 
 
   let [modal, setModal] = useState(false);
@@ -87,6 +86,7 @@ function App() {
       {
         modal == true ? <Modal 글제목={글제목} rename={rename} title={title} /> : null
       }
+      <Modal2></Modal2>
     </div>
   );
 }
@@ -100,6 +100,36 @@ function Modal(props) {
       <button onClick={ () => { props.rename() } }>글수정</button>
     </div>
   );
+}
+
+// (참고 1) class 문법으로도 컴포넌트 생성 가능
+// 1. class 컴포넌트명 extends React.Component {}
+// 2. constructor() { super() } render() {} 작성
+// 3. render() { return( html 코드 작성) }
+class Modal2 extends React.Component {
+  // (참고 5) class 컴포넌트에서 props 데이터는 constroctor()에 저장됨
+  constructor(props) {
+    super(props);
+    // (참고 2) class 컴포넌트에서 state 생성
+    // 1. this.state = { 작명 : 값, 작명 : 값, ... }
+    this.state = {
+      name : 'kim',
+      age : 20
+    }
+  }
+  render() {
+    return(
+      <div>
+        class 컴포넌트입니다. <br/> 
+        {/* (참고 3) class 컴포넌트에서 state 사용 */}
+        나이는 {this.state.age}입니다. <br/> 
+        {/* (참고 4) class 컴포넌트에서 state 수정 */}
+        <button onClick={ () => {
+          this.setState({ age : 26 })
+        } }>수정</button>
+      </div>
+    )
+  }
 }
 
 export default App;
