@@ -40,7 +40,7 @@
 .main-bg {
   height: 300px;
   /* css 파일에서 src 폴더의 이미지를 넣을 땐 url('./이미지경로') */
-  /* background-image: url('./images/bg.png'); */
+  background-image: url('./images/bg.png');
   background-size: cover;
   background-position: center;
 }
