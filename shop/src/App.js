@@ -26,24 +26,28 @@ function App() {
 
       <Container>
         <Row>
-          <Product data={data}/>
+          {
+            shoes.map(function(shoe, i) {
+              return (
+                <Card shoes={shoes[i]} i={i} />
+              );
+            })
+          }
         </Row>
       </Container>
     </div>
   );
 }
 
-function Product(props) {
-  return props.data.map( (shoe, i) => {
-    return (
-      <Col xs md={4}>
-        <img src={"https://codingapple1.github.io/shop/shoes" + (i+1) + ".jpg"} width="80%" />
-        <h4>{ shoe.title }</h4>
-        <p>{ shoe.content }</p>
-        <p>{ shoe.price }</p>
-      </Col>
-    );
-  })
+function Card(props) {
+  return (
+    <Col xs md={4}>
+      <img src={"https://codingapple1.github.io/shop/shoes" + (props.i+1) + ".jpg"} width="80%" />
+      <h4>{ props.shoes.title }</h4>
+      <p>{ props.shoes.content }</p>
+      <p>{ props.shoes.price }</p>
+    </Col>
+  );
 }
 
 export default App;
