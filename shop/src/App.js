@@ -35,7 +35,7 @@ function App() {
               {
                 shoes.map(function(shoe, i) {
                   return (
-                    <Card shoes={shoes[i]} i={i} />
+                    <Card shoes={shoes[i]} i={i} key={i} />
                   );
                 })
               }
