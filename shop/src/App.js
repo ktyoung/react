@@ -43,13 +43,6 @@ function App() {
           </Container>
           </>
         } />
-
-        {/* props 문법을 이용 → App()에서 Detail()로 데이터 바인딩 */}
-        {/* 100개의 상품 페이지가 필요하다면? :URL 파라미터 사용! 
-              → /detail/아무거나 라는 의미... ":작명" */}
-
-        {/* (참고) url 파라미터는 여러개 설정 가능하다 
-              예) /detail/:id/:color/... */}
         <Route path="/detail/:id" element={ <Detail shoes={ shoes } /> } />
 
         <Route path="*" element={ <div>존재하지 않는 페이지</div> } />
