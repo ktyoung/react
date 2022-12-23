@@ -7,10 +7,11 @@ import React, { useState } from 'react';
 import data from './data.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import Detail from './routes/Detail.js';
+import axios from 'axios';
 
 function App() {
 
-  let [shoes] = useState(data);
+  let [shoes, setShoes] = useState(data);
   let navigate = useNavigate();
 
   return (
@@ -41,6 +42,19 @@ function App() {
               }
             </Row>
           </Container>
+          <button onClick={ () => { 
+            // ajax로 GET/POST 요청을 편하게 할 수 있는 axios 라이브러리
+            // (참고 1) axios를 사용하려면
+            // 1. npm install axios
+            // 2. import axios ...
+            // 3. axios.get('URL')
+
+            // 요청결과는 axios.get('URL').then()
+            // ajax 요청이 실패할 경우에는 .catch()에 실행할 코드 작성
+            axios.get('https://codingapple1.github.io/shop/data2.json')
+            .then( (result) => { setShoes(shoes.concat(result.data)) } )
+            .catch( () => { console.log("ajax 요청 실패") } )
+           } }>더보기</button>
           </>
         } />
         <Route path="/detail/:id" element={ <Detail shoes={ shoes } /> } />
