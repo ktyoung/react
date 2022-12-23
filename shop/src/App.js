@@ -43,17 +43,27 @@ function App() {
             </Row>
           </Container>
           <button onClick={ () => { 
-            // ajax로 GET/POST 요청을 편하게 할 수 있는 axios 라이브러리
-            // (참고 1) axios를 사용하려면
-            // 1. npm install axios
-            // 2. import axios ...
-            // 3. axios.get('URL')
-
-            // 요청결과는 axios.get('URL').then()
-            // ajax 요청이 실패할 경우에는 .catch()에 실행할 코드 작성
             axios.get('https://codingapple1.github.io/shop/data2.json')
-            .then( (result) => { setShoes(shoes.concat(result.data)) } )
+            .then( (result) => { 
+              let copy = [...shoes, ...result.data]
+              setShoes(copy) } )
             .catch( () => { console.log("ajax 요청 실패") } )
+
+            // (참고 1) 서버로 데이터를 전송하는 POST 요청
+            // axios.post('/URL', {데이터명 : '데이터'})
+
+            // (참고 2) 동시에 ajax 요청을 여러개 하려면?
+            // Promise.all([ axios.get('/url1'), axios.get('/url2') ])
+            // .then( () => {} )
+
+            // (참고 3) 서버와는 문자자료만 주고받을 수 있다
+            // array나 object에 ""를 작성하면 된다 → 이를 JSON이라 함 → axios가 array로 변환함
+
+            // (참고 4) fetch()로 GET 요청
+            // fetch('URL')
+            // .then(결과 => 결과.json()) → JSON을 array/object로 변환하는 과정
+            // .then(data => {}) → 요청 성공 시 실행할 코드
+
            } }>더보기</button>
           </>
         } />
