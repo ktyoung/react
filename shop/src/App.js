@@ -2,7 +2,7 @@
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar, Nav, Container, Row, Col } from 'react-bootstrap';
+import { Navbar, Nav, Container, Row, Col, Alert, Button } from 'react-bootstrap';
 import React, { useState } from 'react';
 import data from './data.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
@@ -12,6 +12,8 @@ import axios from 'axios';
 function App() {
 
   let [shoes, setShoes] = useState(data);
+  let [clickCount, setClickCount] = useState(1);
+  let [visible, setVisible] = useState(true);
   let navigate = useNavigate();
 
   return (
@@ -42,29 +44,24 @@ function App() {
               }
             </Row>
           </Container>
-          <button onClick={ () => { 
-            axios.get('https://codingapple1.github.io/shop/data2.json')
-            .then( (result) => { 
-              let copy = [...shoes, ...result.data]
-              setShoes(copy) } )
-            .catch( () => { console.log("ajax 요청 실패") } )
-
-            // (참고 1) 서버로 데이터를 전송하는 POST 요청
-            // axios.post('/URL', {데이터명 : '데이터'})
-
-            // (참고 2) 동시에 ajax 요청을 여러개 하려면?
-            // Promise.all([ axios.get('/url1'), axios.get('/url2') ])
-            // .then( () => {} )
-
-            // (참고 3) 서버와는 문자자료만 주고받을 수 있다
-            // array나 object에 ""를 작성하면 된다 → 이를 JSON이라 함 → axios가 array로 변환함
-
-            // (참고 4) fetch()로 GET 요청
-            // fetch('URL')
-            // .then(결과 => 결과.json()) → JSON을 array/object로 변환하는 과정
-            // .then(data => {}) → 요청 성공 시 실행할 코드
-
-           } }>더보기</button>
+          
+          {
+            visible == true 
+            ? <Button variant="primary" className='more-btn' onClick={ () => { 
+              setClickCount(clickCount += 1)
+              if (clickCount > 2) {
+                setVisible(false);
+              }
+              axios.get("https://codingapple1.github.io/shop/data"+ parseInt(clickCount) +".json")
+              .then( (result) => { 
+                let copy = [...shoes, ...result.data]
+                setShoes(copy)
+                } )
+              .catch( () => { console.log("ajax 요청 실패") } );
+             } }>더보기</Button>
+            : null
+          }
+          
           </>
         } />
         <Route path="/detail/:id" element={ <Detail shoes={ shoes } /> } />
