@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {Nav} from 'react-bootstrap';
-
-// 애니메이션 효과 주는 방법
-// 1. 애니메이션 동작 전 스타일을 담을 className 만들기 
-// 2. 애니메이션 동작 후 스타일을 담을 className 만들기 
-// 3. transition 속성 추가
-// 4. 원할 때 CSS 탈부착
+// Context API 사용 방법
+// 1. state 사용을 위해 export한 Context를 import
+import { Context1 } from './../App.js'; // Detail.js는 routes 폴더에 있으므로 상위 폴더로 이동해야함
 
 function Detail(props) {
+    // 2. useContext(Context)
+    let {stock} = useContext(Context1);
+
     let {id} = useParams();
 
     let [count, setCount] = useState(0);
@@ -66,18 +66,13 @@ function Detail(props) {
 }
 
 function TabContents({tabs}) {
-
+    // Detail 뿐만 아니라 그 자식들도 state 사용 가능
+    let {stock} = useContext(Context1);
     let [fade, setFade] = useState('');
 
-    // tabs state가 변할 때마다 'end' 클래스를 부착 → useEffect() 사용
     useEffect( () => {
-        // (참고 1) setTimeout으로 클래스명 부착에 지연시간을 줘야 애니메이션이 동작하는 이유?
-        // 1. 리액트의 automatic batching 기능 때문에 마지막 state 변경 함수만 동작함
-        //  1-1. setFade('') → setFade('end') 순서로 실행되는 것이 아니라 setFade('end')만 동작함
-        // 2. 따라서, 클래스명 부착을 나중에 하게되면 정상적으로 동작함
         let fadeAnimate = setTimeout( () => {setFade('end');}, 100 );
 
-        // clean up function(useEffect 실행 전에 동작하는 함수)
         return () => {
             clearTimeout(fadeAnimate);
             setFade('');
@@ -85,10 +80,14 @@ function TabContents({tabs}) {
     }, [tabs])
 
     return (
-        // 4. 애니메이션 CSS 탈부착
-        // `문자 ${변수}`로 html 사이에 문자 삽입 가능
         <div className={"start " + fade}> 
-            { [<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tabs] }
+            { 
+                [
+                <div>내용 0 <br/> 재고 : {stock[0]}</div>, 
+                <div>내용 1 <br/> 재고 : {stock[1]}</div>, 
+                <div>내용 2 <br/> 재고 : {stock[2]}</div>
+                ][tabs]
+            }
         </div>
     );
 }
