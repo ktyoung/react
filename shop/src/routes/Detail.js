@@ -1,12 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {Nav} from 'react-bootstrap';
-// Context API 사용 방법
-// 1. state 사용을 위해 export한 Context를 import
-import { Context1 } from './../App.js'; // Detail.js는 routes 폴더에 있으므로 상위 폴더로 이동해야함
+import { Context1 } from './../App.js';
 
 function Detail(props) {
-    // 2. useContext(Context)
     let {stock} = useContext(Context1);
 
     let {id} = useParams();
@@ -66,7 +63,6 @@ function Detail(props) {
 }
 
 function TabContents({tabs}) {
-    // Detail 뿐만 아니라 그 자식들도 state 사용 가능
     let {stock} = useContext(Context1);
     let [fade, setFade] = useState('');
 
