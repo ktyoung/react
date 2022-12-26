@@ -11,14 +11,6 @@ import Cart from './routes/Cart.js';
 
 export let Context1 = createContext();
 
-// Redux를 사용하면 props 없이 state 공유 가능
-
-// (참고 1) Redux 사용 방법
-// 1. 설치 : npm install @reduxjs/toolkit react-redux
-// 2. 세팅
-//  2-1. store.js 파일 생성 (state 보관 장소) 및 기본 코드 작성
-//  2-2. index.js 파일에서 <Provider store={store}> 작성
-
 function App() {
 
   let [shoes, setShoes] = useState(data);
