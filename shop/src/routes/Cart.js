@@ -1,18 +1,12 @@
-import { Table } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { Table, Button } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+// 3. state 변경 함수, useDispath import
+import { rename } from './../store.js';
 
 function Cart() {
 
-    // Redux store의 state 사용하기
-    // 1. useSelector( (state) => { return state } ) // → Redux store를 가져옴
-    let state = useSelector( (state) => { return state } ); // 변수 a에 Redux store에 있던 state가 저장됨
-
-    // (참고 1) useSelector 편하게 사용하려면?
-    // 1. useSelector 함수에서 사용하고 싶은 state만 불러와서 사용할 수 있다
-    //  예) let state = useSelector( (state) => { return state.user } );
-    // 2. {중괄호}와 return은 생략 가능
-    // 예) let state = useSelector( (state) => state.stock );
-
+    let state = useSelector( (state) => { return state } );
+    let dispatch = useDispatch(); // → store.js로 요청 보내주는 함수
 
     return (
         <div>
@@ -26,18 +20,21 @@ function Cart() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>{ state.itemId[0] }</td>
-                        <td>{ state.itemName[0] }</td>
-                        <td>{ state.itemCount[0] }</td>
-                        <td>변경</td>
-                    </tr>
-                    <tr>
-                        <td>{ state.itemId[1] }</td>
-                        <td>{ state.itemName[1] }</td>
-                        <td>{ state.itemCount[1] }</td>
-                        <td>변경</td>
-                    </tr>
+                    {
+                        state.cart.map(function(a, i) {
+                            return (
+                                <tr key={i}>
+                                    <td>{ state.cart[i].id }</td>
+                                    <td>{ state.cart[i].name }</td>
+                                    <td>{ state.cart[i].count }</td>
+                                    <td><Button variant="primary" onClick={ () => {
+                                        // 4. dispatch(state변경함수()) 문법으로 사용
+                                        dispatch(rename())
+                                    } }>+</Button></td>
+                                </tr>
+                            );
+                        })
+                    }
                 </tbody>
             </Table>
         </div>
