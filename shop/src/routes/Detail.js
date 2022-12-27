@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {Nav} from 'react-bootstrap';
 import { Context1 } from './../App.js';
+import { addCart } from "../store.js";
+import { useDispatch } from "react-redux";
 
 function Detail(props) {
     let {stock} = useContext(Context1);
@@ -12,6 +14,7 @@ function Detail(props) {
     let [notice, setNotice] = useState(true);
     let [tabs, setTabs] = useState(0);
     let [fadeDetail, setFadeDetail] = useState('');
+    let dispatch = useDispatch()
 
     useEffect( () => {
         let timer = setTimeout( () => { setNotice(false)  }, 2000 )
@@ -40,7 +43,9 @@ function Detail(props) {
                     <h4 className="pt-5">{ props.shoes.find(shoes => shoes.id === parseInt(id)).title }</h4>
                     <p>{ props.shoes.find(shoes => shoes.id === parseInt(id)).content }</p>
                     <p>{ props.shoes.find(shoes => shoes.id === parseInt(id)).price }원</p>
-                    <button className="btn btn-danger">주문하기</button> 
+                    <button className="btn btn-danger" onClick={ () => { 
+                        dispatch(addCart( {id : 1, name : 'Red Knit', count : 1} )) 
+                    } }>주문하기</button> 
                 </div>
             </div>
 

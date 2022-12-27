@@ -1,6 +1,7 @@
 import { Table, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { rename, increase } from './../store/userSlice.js';
+import { increase } from './../store/userSlice.js';
+import { addCount } from './../store.js';
 
 function Cart() {
 
@@ -28,9 +29,11 @@ function Cart() {
                                     <td>{ state.cart[i].id }</td>
                                     <td>{ state.cart[i].name }</td>
                                     <td>{ state.cart[i].count }</td>
-                                    <td><Button variant="primary" onClick={ () => {
-                                        dispatch(rename())
-                                    } }>+</Button></td>
+                                    <td>
+                                        <Button variant="primary" onClick={ () => { 
+                                            dispatch(addCount(state.cart[i].id)) 
+                                        } }>+</Button>
+                                    </td>
                                 </tr>
                             );
                         })

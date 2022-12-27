@@ -26,7 +26,7 @@ function App() {
           <Navbar.Brand href="#home">ShoeShop</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link className='link' onClick={ () => { navigate('/') } }>홈</Nav.Link>
-            <Nav.Link className='link' onClick={ () => { navigate('/detail') } }>상세페이지</Nav.Link>
+            <Nav.Link className='link' onClick={ () => { navigate('/cart') } }>장바구니</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
