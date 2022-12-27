@@ -1,15 +1,16 @@
 import { Table, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-// 3. state 변경 함수, useDispath import
-import { rename } from './../store.js';
+import { rename, increase } from './../store/userSlice.js';
 
 function Cart() {
 
     let state = useSelector( (state) => { return state } );
-    let dispatch = useDispatch(); // → store.js로 요청 보내주는 함수
+    let dispatch = useDispatch();
 
     return (
         <div>
+            <h6>{ state.user.name }({state.user.age})의 장바구니</h6>
+            <Button variant="primary" onClick={ () => { dispatch(increase(10)) } }>버튼</Button>
             <Table>
                 <thead>
                     <tr>
@@ -28,7 +29,6 @@ function Cart() {
                                     <td>{ state.cart[i].name }</td>
                                     <td>{ state.cart[i].count }</td>
                                     <td><Button variant="primary" onClick={ () => {
-                                        // 4. dispatch(state변경함수()) 문법으로 사용
                                         dispatch(rename())
                                     } }>+</Button></td>
                                 </tr>

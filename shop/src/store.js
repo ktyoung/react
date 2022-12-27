@@ -1,16 +1,6 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
+import user from './store/userSlice.js'
 
-let user = createSlice({
-    name : 'user',
-    initialState : 'kim',
-    // Redux에서 state 변경하는 방법
-    // 1. reducers : {}에 state 변경 함수 작성
-    reducers : {
-        rename(state) {
-            return 'ty ' + state;
-        }
-    }
-})
 
 let cart = createSlice({
     name : 'cart',
@@ -19,9 +9,6 @@ let cart = createSlice({
         {id: 2, name: 'Grey Yordan', count: 1}
     ]
 })
-
-// 2. state 변경 함수 export
-export let { rename } = user.actions
 
 export default configureStore({
     reducer: {
