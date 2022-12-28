@@ -2,7 +2,7 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, Container, Row, Col, Alert, Button } from 'react-bootstrap';
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import data from './data.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import Detail from './routes/Detail.js';
@@ -13,21 +13,9 @@ export let Context1 = createContext();
 
 function App() {
 
-  // 브라우저 Local Storage 사용법 (문자만 저장 가능! → array/object는 JSON으로 변환하면 저장 가능함)
-  // 1. 데이터 추가 : localStorage.setItem('데이터이름', '데이터');
-  // 2. 데이터 읽기 : localStorage.getItem('데이터이름');
-  // 3. 데이터 삭제 : localStorage.removeItem('데이터이름')
-  // 4. 데이터 수정하는 문법은 없음. 데이터를 꺼내 수정하고 다시 넣으면 됨
-  // 5. Session Storage에 데이터 작업을 하려면? localStorage를 sessionStorage로
-
-  let obj = {name : 'kim'};
-  // JSON.stringify(obj); // array/object를 JSON 변환하는 JSON.stringify()
-  // localStorage.setItem('data', obj); // → object 자료형을 직접 추가할 수 없음
-  localStorage.setItem('data', JSON.stringify(obj)); // → JSON 변환 후 데이터 추가
-
-  let getItem = localStorage.getItem('data'); // 출력하면 JSON 형태로 출력됨(array/object형이 아님!) 
-                                              // → JSON을 array/object 형으로 바꿔야 편집이 가능함
-  JSON.parse(getItem); // → JSON을 array/object 변환하는 JSON.parse()
+  useEffect( () => {
+    localStorage.setItem('watched', JSON.stringify( [] ))
+  }, [])
 
   let [shoes, setShoes] = useState(data);
   let [stock, setStock] = useState([10, 11, 12]);
@@ -57,7 +45,7 @@ function App() {
               {
                 shoes.map(function(shoe, i) {
                   return (
-                    <Card shoes={shoes[i]} i={i} key={i} />
+                    <Card shoes={shoes[i]} i={i} key={i}  />
                   );
                 })
               }
