@@ -9,6 +9,7 @@ import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 const Detail = lazy( () => import('./routes/Detail.js') );
 const Cart = lazy( () => import('./routes/Cart.js') );
+const Test = lazy( () => import('./routes/Test.js') );
 
 
 export let Context1 = createContext();
@@ -90,6 +91,8 @@ function App() {
             } />
 
           <Route path="/cart" element={ <Cart/> }/>
+
+          <Route path="/test" element={ <Test/> }/>
 
           <Route path="*" element={ <div>존재하지 않는 페이지</div> } />
 
