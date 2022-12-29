@@ -7,33 +7,11 @@ import data from './data.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
-// Detail, Cart 컴포넌트는 메인 페이지에서 즉시 로드할 필요가 없음!
-// import Detail from './routes/Detail.js';
-// import Cart from './routes/Cart.js';
-// lazy import → "필요해질 때 import하라"
 const Detail = lazy( () => import('./routes/Detail.js') );
 const Cart = lazy( () => import('./routes/Cart.js') );
 
 
 export let Context1 = createContext();
-
-// (참고 1) 크롬 확장프로그램 React Developer Tools를 사용하면 리액트 사이트를 컴포넌트로 미리볼 수 있음
-// 장점 1. state 및 props확인 및 수정 가능
-// Profiler 기능을 사용하면? 성능을 저하시키는 컴포넌트를 쉽게 찾을 수 있다 (렌더링 시간 확인 가능함)
-// 지연시간이 발생하는 대부분의 이유는 ajax 요청 등(서버에서 데이터를 가져오는 작업)에서 발생함
-
-// (참고 2) Redux Developer Tools
-// 장점 1. Redux store에 있던 state 전부 확인 가능
-// 장점 2. dispatch 때마다 무엇이 어떻게 바뀌었는지 로그를 작성함 (state 변경 내역 확인 가능)
-// 장점 3. store가 복잡해지면 유용
-
-// (참고 3) Single Page Application 특징
-// 1. 발행하면 js 파일 하나에 모든 코드를 작성함 (사이즈가 매우 커짐 → 로딩 속도가 느림)
-// 2. 메인 페이지 로딩 속도 개선을 위해 lazy import를 사용할 수 있다 (Line 10 참고)
-// 3. lazy import한 컴포넌트 코드는 사이트 발행 시 별도의 js파일로 분리됨
-// 4. 단점 : Cart, Detail 컴포넌트 로드 시 로딩시간이 발생할 수 있음
-//  4-1. 개선 방법? <Suspense> 컴포넌트를 사용하면 로딩 중 UI를 삽입할 수 있음
-//  4-2. <Suspense>로 <Routes> 전체를 감싸도 됨
 
 function App() {
 
@@ -69,7 +47,6 @@ function App() {
         </Container>
       </Navbar>
 
-      {/* 컴포넌트가 로드되기 전까지 <Suspense fallback={ 로딩 UI }>가 출력됨 */}
       <Suspense fallback={ <div>로딩 중입니다.</div> }>
         <Routes>
           <Route path="/" element={ 
