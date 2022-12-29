@@ -8,8 +8,16 @@ import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import Detail from './routes/Detail.js';
 import axios from 'axios';
 import Cart from './routes/Cart.js';
+import { useQuery } from '@tanstack/react-query';
 
 export let Context1 = createContext();
+
+// react-query
+// 실시간 데이터를 계속 가져와야하는 사이트에서 사용하면 좋음
+
+// (참고 1) react-query 설치
+// 1. npm install @tanstack/react-query 
+// 2. index.js 세팅(QueryClient, QueryClientProvider, useQuery)
 
 function App() {
 
@@ -23,6 +31,24 @@ function App() {
   let [visible, setVisible] = useState(true);
   let navigate = useNavigate();
 
+  // useQuery로 ajax 요청하기
+  // 장점 1. 성공/실패/로딩 여부 쉽게 파악 가능
+  // 장점 2. 주지적으로 ajax 요청을 자동으로 수행함(refetch)
+  // 장점 3. ajax 요청 실패 시 retry를 자동으로 수행함
+  // 장점 4. state 공유 안 해도 됨 (ajax 요청해서 데이터 가져오는 코드를 자식 컴포넌트에서 그대로 재사용하면 됨)
+  // 장점 5. ajax 결과 캐싱 기능 
+  //  5-1. ajax 성공 결과를 5분 동안 기억함 → 5분 내 같은 경로로 ajax 재요청할 경우 5분 전(최초 결과)를 먼저 보여줌 → 이후 다음 GET 요청
+  let result = useQuery(['data'], () => {
+    return axios.get('https://codingapple1.github.io/userdata.json').then( (a) => {
+      return a.data
+    } )
+    // ,{ staleTime : 2000 } → refetch 주기(ms) 설정
+  })
+
+  // result.data → ajax 요청 성공 시 가져오는 데이터
+  // result.isLoading → ajax 요청(로딩) 중이면 true
+  // result.error → ajax 요청 실패하면 true
+
   return (
     <div className="App">
       <Navbar bg="light" variant="light">
@@ -31,6 +57,11 @@ function App() {
           <Nav className="me-auto">
             <Nav.Link className='link' onClick={ () => { navigate('/') } }>홈</Nav.Link>
             <Nav.Link className='link' onClick={ () => { navigate('/cart') } }>장바구니</Nav.Link>
+          </Nav>
+          <Nav className='ms-auto'>
+            { result.isLoading && '로딩 중입니다.' }
+            { result.error && '오류입니다.' }
+            { result.data && '반가워요, ' + result.data.name + '!' }
           </Nav>
         </Container>
       </Navbar>

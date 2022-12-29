@@ -29,9 +29,7 @@ function Detail(props) {
         let output = localStorage.getItem('watched');
         output = JSON.parse(output);
         output.push(findItem.id);
-        // set 자료형은 중복 데이터를 추가하지 않음
         output = new Set(output);
-        // set 자료형을 다시 array형으로 변환
         output = Array.from(output);
         localStorage.setItem('watched', JSON.stringify(output));
     }, [])
