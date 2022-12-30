@@ -11,6 +11,13 @@ const Detail = lazy( () => import('./routes/Detail.js') );
 const Cart = lazy( () => import('./routes/Cart.js') );
 const Test = lazy( () => import('./routes/Test.js') );
 
+// (참고 1) 리액트의 setState 함수 특징
+// 1. state 변경 함수들은 전부 asynchronous(비동기적) 처리됨
+//  1-1. 따라서, 함수 실행을 완료하기까지 시간이 오래 걸리면 우선 순위를 미루고 다음 코드를 실행함
+// 2. 해결 방법은? → sync하게, 순차적으로 실행하고 싶을 땐?
+//  2-1. useEffect를 활용하거나,
+//  2-2. 굳이 state로 생성하지 않아도 된다면 일반 변수로 생성하거나,
+//  2-3. 하나의 state에 여러 변수를 array/object 자료형으로 선언
 
 export let Context1 = createContext();
 
